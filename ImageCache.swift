@@ -1,7 +1,7 @@
 //
 //  ImageCache.swift
 //
-//  Created by Alex Paul on 1/23/19.
+//  Created by Alex Paul on 2/8/19.
 //  Copyright © 2019 Alex Paul. All rights reserved.
 //
 
@@ -13,7 +13,7 @@ final class ImageCache {
   private static var cache = NSCache<NSString, UIImage>()
   
   static func fetchImageFromNetwork(urlString: String, completion: @escaping (AppError?, UIImage?) -> Void) {
-    NetworkHelper.shared.performDataTask(endpointURLString: urlString) { (appError, data ) in
+    NetworkHelper.shared.performDataTask(endpointURLString: urlString, httpMethod: "GET", httpBody: nil) { (appError, data ) in
       if let appError = appError {
         completion(appError, nil)
       } else if let data = data {
