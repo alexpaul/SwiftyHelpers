@@ -18,7 +18,7 @@ final class ImageCache {
     NetworkHelper.shared.performDataTask(endpointURLString: urlString, httpMethod: "GET", httpBody: nil) { (appError, data ) in
       if let appError = appError {
         DispatchQueue.main.async {
-          completion(appEroor, nil)
+          completion(appError, nil)
         }
       } else if let data = data {
         DispatchQueue.global().async {
