@@ -17,7 +17,9 @@ final class ImageCache {
   public func fetchImageFromNetwork(urlString: String, completion: @escaping (AppError?, UIImage?) -> Void) {
     NetworkHelper.shared.performDataTask(endpointURLString: urlString, httpMethod: "GET", httpBody: nil) { (appError, data ) in
       if let appError = appError {
-        completion(appError, nil)
+        DispatchQueue.main.async {
+          completion(appEroor, nil)
+        }
       } else if let data = data {
         DispatchQueue.global().async {
           if let image = UIImage(data: data) {
@@ -34,7 +36,8 @@ final class ImageCache {
   public func fetchImageFromCache(urlString: String) -> UIImage? {
     return ImageCache.cache.object(forKey: urlString as NSString)
   }
-}
+
+
 
 // Example Use Case: 
 /*
