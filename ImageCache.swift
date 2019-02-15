@@ -1,7 +1,7 @@
 //
 //  ImageCache.swift
 //
-//  Created by Alex Paul on 2/8/19.
+//  Created by Alex Paul on 2/14/19.
 //  Copyright © 2019 Alex Paul. All rights reserved.
 //
 
@@ -10,16 +10,18 @@ import UIKit
 final class ImageCache {
   private init() {}
   
+  static let shared = ImageCache()
+  
   private static var cache = NSCache<NSString, UIImage>()
   
-  static func fetchImageFromNetwork(urlString: String, completion: @escaping (AppError?, UIImage?) -> Void) {
+  public func fetchImageFromNetwork(urlString: String, completion: @escaping (AppError?, UIImage?) -> Void) {
     NetworkHelper.shared.performDataTask(endpointURLString: urlString, httpMethod: "GET", httpBody: nil) { (appError, data ) in
       if let appError = appError {
         completion(appError, nil)
       } else if let data = data {
         DispatchQueue.global().async {
           if let image = UIImage(data: data) {
-            cache.setObject(image, forKey: urlString as NSString)
+            ImageCache.cache.setObject(image, forKey: urlString as NSString)
             DispatchQueue.main.async {
               completion(nil, image)
             }
@@ -29,17 +31,17 @@ final class ImageCache {
     }
   }
   
-  static func fetchImageFromCache(urlString: String) -> UIImage? {
-    return cache.object(forKey: urlString as NSString)
+  public func fetchImageFromCache(urlString: String) -> UIImage? {
+    return ImageCache.cache.object(forKey: urlString as NSString)
   }
 }
 
 // Example Use Case: 
 /*
-    if let image = ImageCache.fetchImageFromCache(urlString: photoURL.absoluteString) {
+   if let image = ImageCache.shared.fetchImageFromCache(urlString: photoURL.absoluteString) {
       profileImageButton.setImage(image, for: .normal)
     } else {
-      ImageCache.fetchImageFromNetwork(urlString: photoURL.absoluteString) { (appError, image) in
+      ImageCache.shared.fetchImageFromNetwork(urlString: photoURL.absoluteString) { (appError, image) in
         if let appError = appError {
           self.showAlert(title: "Fetching Image Error", message: appError.errorMessage())
         } else if let image = image {
