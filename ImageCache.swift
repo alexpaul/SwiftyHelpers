@@ -33,3 +33,18 @@ final class ImageCache {
     return cache.object(forKey: urlString as NSString)
   }
 }
+
+// Example Use Case: 
+/*
+    if let image = ImageCache.fetchImageFromCache(urlString: photoURL.absoluteString) {
+      profileImageButton.setImage(image, for: .normal)
+    } else {
+      ImageCache.fetchImageFromNetwork(urlString: photoURL.absoluteString) { (appError, image) in
+        if let appError = appError {
+          self.showAlert(title: "Fetching Image Error", message: appError.errorMessage())
+        } else if let image = image {
+          self.profileImageButton.setImage(image, for: .normal)
+        }
+      }
+    }
+*/
