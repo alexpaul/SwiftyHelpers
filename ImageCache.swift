@@ -1,10 +1,9 @@
 //
 //  ImageCache.swift
 //
-//  Created by Alex Paul on 2/14/19.
+//  Created by Alex Paul on 2/23/19.
 //  Copyright © 2019 Alex Paul. All rights reserved.
 //
-
 import UIKit
 
 final class ImageCache {
@@ -36,20 +35,18 @@ final class ImageCache {
   public func fetchImageFromCache(urlString: String) -> UIImage? {
     return ImageCache.cache.object(forKey: urlString as NSString)
   }
+}
 
-
-
-// Example Use Case: 
 /*
-   if let image = ImageCache.shared.fetchImageFromCache(urlString: photoURL.absoluteString) {
-      profileImageButton.setImage(image, for: .normal)
-    } else {
-      ImageCache.shared.fetchImageFromNetwork(urlString: photoURL.absoluteString) { (appError, image) in
-        if let appError = appError {
-          self.showAlert(title: "Fetching Image Error", message: appError.errorMessage())
-        } else if let image = image {
-          self.profileImageButton.setImage(image, for: .normal)
-        }
+  if let image = ImageCache.shared.fetchImageFromCache(urlString: photoURL.absoluteString) {
+    profileImageButton.setImage(image, for: .normal)
+  } else {
+    ImageCache.shared.fetchImageFromNetwork(urlString: photoURL.absoluteString) { (appError, image) in
+      if let appError = appError {
+        self.showAlert(title: "Fetching Image Error", message: appError.errorMessage())
+      } else if let image = image {
+        self.profileImageButton.setImage(image, for: .normal)
       }
     }
+  }
 */
