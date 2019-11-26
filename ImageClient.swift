@@ -1,10 +1,12 @@
+// updated to use Swift 5.0 Result type 
+
 import UIKit
 
 enum AppError: Error {
   case badStatusCode(Int)
   case clientError(Error)
   case badURL(String)
-  case badMimeType(String)
+  case expectedMimeType(String)
 }
 
 struct ImageClient {
@@ -33,7 +35,7 @@ struct ImageClient {
         // here we have to use an @escaping closure capture the data when it's finished proecessing
         completion(.success(imageData))
       } else {
-        completion(.failure(AppError.badMimeType(httpResponse.mimeType ?? "no valid mimeType")))
+        completion(.failure(AppError.expectedMimeType(httpResponse.mimeType ?? "no valid mimeType")))
       }
     }
     dataTask.resume()
